@@ -102,6 +102,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-git config --global core.excludesfile ~/.gitignore
-$ echo *.DS_Store >> ~/.gitignore
