@@ -1,5 +1,6 @@
-## MCMC
+## Gaussian Processes
 
-Add description here
+Maintained by @jtbuch for his reference, but feel free to give your inputs. Maybe used as a future topic for our reading 
+group.
 
-A cool implementation of the concept: http://jakevdp.github.io/blog/2017/12/18/simulating-chutes-and-ladders/
+Classic reference: http://www.gaussianprocess.org/gpml/chapters/RW.pdf
