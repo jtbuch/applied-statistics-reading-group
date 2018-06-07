@@ -47,6 +47,9 @@ We devise the following guidelines for presentation of any given topic. Importan
 
 Note, the concept 'first principle' is used vaguely here. It is not necessary to derive everything rigorously from scratch, but rather meant as a reminder to use a simple enough starting point, such that everyone can be assumed to get the basic idea, and develop a solid line of reasoning from there, which should be, as much as possible, self-contained.
 
+## Philosophy of the Reading Group
+This is explicitly meant to be a 'learning group' rather than a traditional seminar group. We, as a group, will focus on learning and implementing methods. The meetings are not envisioned as lectures, but hands-on and discussion based, Guided, but not solely carried, by the respective presenters. 
+
 ### Contributors (credit shared equally):
 * Tyler Barnes-Diana 
 * Jatan Buch [(@jtbuch)](https://github.com/jtbuch)
