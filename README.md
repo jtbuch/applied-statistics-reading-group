@@ -51,4 +51,4 @@ Note, the concept 'first principle' is used vaguely here. It is not necessary to
 * Tyler Barnes-Diana 
 * Jatan Buch [(@jtbuch)](https://github.com/jtbuch)
 * Alexander Fengler [(@AlexanderFengler)](https://github.com/AlexanderFengler)
-* Babak Hemmatian [@BabakHemmatian](https://github.com/BabakHemmatian)
+* Babak Hemmatian [(@BabakHemmatian)](https://github.com/BabakHemmatian)
