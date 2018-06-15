@@ -1,0 +1,55 @@
+#!/usr/bin/python27
+# import tensorflow and the mnist dataset
+import tensorflow as tf
+import numpy as np
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+# determine batch size
+batch = 50
+# create placeholder for input
+img=tf.placeholder(tf.float32, [batch,784])
+image = tf.reshape(img,[batch,28,28,1])
+ans=tf.placeholder(tf.float32, [batch,10])
+# create the 1st convolution layer
+filters1 = tf.Variable(tf.truncated_normal([5,5,1,32],stddev=0.1))
+bias1 = tf.Variable(tf.truncated_normal([32],stddev=0.1))
+l1Out = tf.nn.conv2d(image,filters1,[1,1,1,1],"SAME")
+l1Out = tf.nn.relu(l1Out+bias1)
+l1Out = tf.nn.max_pool(l1Out,[1,2,2,1],[1,2,2,1],"SAME")
+# create the 2nd convolution layer
+filters2 = tf.Variable(tf.truncated_normal([5,5,32,64],stddev=0.1))
+bias2 = tf.Variable(tf.truncated_normal([64],stddev=0.1))
+l2Out = tf.nn.conv2d(l1Out,filters2,[1,1,1,1],"SAME")
+l2Out = tf.nn.relu(l2Out+bias2)
+l2Out = tf.nn.max_pool(l2Out,[1,2,2,1],[1,2,2,1],"SAME")
+l3inp = tf.reshape(l2Out,[batch,3136])
+# create the feedforward layers
+l3U = tf.Variable(tf.truncated_normal([3136,250],stddev=0.1))
+b3U = tf.Variable(tf.truncated_normal([250],stddev=0.1))
+l3Out = tf.matmul(l3inp,l3U)+b3U
+l3Out = tf.nn.relu(l3Out)
+l4U = tf.Variable(tf.truncated_normal([250,10],stddev=0.1))
+b4U = tf.Variable(tf.truncated_normal([10],stddev=0.1))
+l4Out = tf.matmul(l3Out,l4U)+b4U
+l4Out = tf.nn.relu(l4Out)
+# softmax on logits
+prbs = tf.nn.softmax(l4Out)
+# loss function
+xEnt = tf.reduce_mean(-tf.reduce_sum(ans * tf.log(prbs), reduction_indices=[1]))
+# training with AdamOptimizer
+train = tf.train.AdamOptimizer(learning_rate=0.0001).minimize(xEnt)
+# calculating accuracy
+numCorrect= tf.equal(tf.argmax(prbs,1), tf.argmax(ans,1))
+accuracy = tf.reduce_mean(tf.cast(numCorrect, tf.float32))
+# feed the data into the model batch by batch 2000 times
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
+for i in range(2000):
+    imgs, anss = mnist.train.next_batch(batch)
+    temp=sess.run(train, feed_dict={img: imgs, ans: anss})
+# test accuracy
+sumAcc=0
+for i in range(2000):
+    imgs, anss= mnist.test.next_batch(batch)
+    sumAcc+=sess.run(accuracy, feed_dict={img: imgs, ans: anss})
+print "Test Accuracy: %r" % (sumAcc/2000)
