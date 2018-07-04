@@ -2,13 +2,13 @@
 # import tensorflow
 import tensorflow as tf
 # The real TensorFlow code is in C. But it has various "wrappers", the most complete of which is Python. The Python code
-# one writes is transformed into a "graph" in C (called "session" or "sess" for short) and the process of writing code 
+# one writes is transformed into a "graph" in C (called "session" or "sess" for short) and the process of writing code
 # in TensorFlow is composed of the two steps of defining that graph and then asking for specific parts of it to be run.
 # While the implicit C code is incredibly fast, one can take advantage of the parallelizing power of GPUs that this language
 # is designed to work with to increase the speed even further. Let me know if you need helping compiling TensorFlow from
-# source to use GPU. 
+# source to use GPU.
 
-# import the mnist dataset
+# import the mnist dataset. There are about 80000 examples there, pre-divided into training and test sets
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 # One-hot transforms the integer labels (e.g. 1) into one-hot vectors that are more convenient to train with in TensorFlow
@@ -26,8 +26,8 @@ img=tf.placeholder(tf.float32, [batchSz,784])
 ans = tf.placeholder(tf.float32, [batchSz, 10])
 # define the first layer
 # these are the weights. Variables are by default trainable. Set trainable=False if they should not be included in backpropagation
-# Here I'm just using random normal distribution with low standard deviation to kickstart the weights
-U = tf.Variable(tf.random_normal([784,784], stddev=.1),trainable=True) 
+# Here I'm just using random normal distribution with low standard deviation to kickstart the weights. Note the capital V
+U = tf.Variable(tf.random_normal([784,784], stddev=.1),trainable=True)
 bU = tf.Variable(tf.random_normal([784], stddev=.1),trainable=True) # these are the biases
 l1Output = tf.matmul(img,U)+bU # matmul just multiplies the two matrices
 l1Output=tf.nn.relu(l1Output) # relu sets negative activations to zero. It has been shown that this greatly helps ff net perf.
@@ -63,10 +63,10 @@ sess.run(tf.global_variables_initializer()) # initializes the variables (assigns
 #-------------------------------------------------
 # feed the data into the model batch by batch 1000 times
 for i in range(1000):
-    imgs, anss = mnist.train.next_batch(batchSz) # asks for the input and desired output to be stored in imgs and anss 
+    imgs, anss = mnist.train.next_batch(batchSz) # asks for the input and desired output to be stored in imgs and anss
     # for the next batch
     sess.run(train, feed_dict={img: imgs, ans: anss}) # this calls for running the "train" function defined above.
-    # TensorFlow will automatically calculate variables that are needed and ignore the rest. But the input-output placeholders 
+    # TensorFlow will automatically calculate variables that are needed and ignore the rest. But the input-output placeholders
     # defined above need to be filled with the value in imgs and anss for the training to happen. feed_dict associates these
     # with one-another and feeds them into the network. Always be careful about the data-types and shapes of these
 # test accuracy
@@ -77,6 +77,4 @@ for i in range(1000):
     # does not require updating variables to calculate, no training happens in this part. Which means we get to test our
     # performance on not-previously-seen samples. Note that sumAcc needs to be defined as the output. That one is the Python
     # object we can print. Accuracy itself is a TensorFlow object that cannot be directly printed out.
-print "Test Accuracy: %r" % (sumAcc/100) 
-# there is a bug somewhere, possibly in the non-Python code this transforms into, causing us to lose one decimal point in 
-# the calculation in some trials. Neither I, nor any of the TAs could figure it out: the code seems fine as far as we could tell.
+print "Test Accuracy: %r" % (sumAcc/1000)
