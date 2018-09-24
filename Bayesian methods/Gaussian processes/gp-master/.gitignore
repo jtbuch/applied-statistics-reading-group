@@ -1,0 +1,10 @@
+.DS_Store
+.ipynb_checkpoints
+*.pyc
+*.txt
+dfm_gp.py
+*.pdf
+*.png
+matplotlibrc
+final.ipynb
+worksheet*.ipynb
