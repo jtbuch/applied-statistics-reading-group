@@ -1,0 +1,3 @@
+A GRU cell was used as the recurrent cell of the network. 
+
+The only hyperparameters that were left to us to choose were the embedding size and the number of units in the recurrent layer. Based on the example presented in the book, 128 was chosen as the embedding size and 512 as the size of the recurrent layer. Given how the perplexity is lower on the development set than on the training set, it does not look like these choices have led to overfitting. Since this number of parameters already resulted in perplexity of less than 150 on the development set and increasing the number would have meant significantly increasing the time it takes for the network to train, performance with a greater number of parameters was not examined.
